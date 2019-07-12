@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	
+  <script type="text/javascript">
+  		$(document).ready(function(){
+    		$('#submit1').click(function(){ 
+    			var uname=$("#username").val();					
+				var password1 =$("#password1").val();
+				var confirm_pass =$("#confirm_pass").val();
+				console.log(uname);
+				console.log(password1);
+				console.log(confirm_pass);
+
+				if (uname==null||uname=="") {
+					alert("UserName can't be blank");  
+					$('#username').css({"border-color": "red"}).focus();
+					return false; 
+					}
+				else if(password1==""){
+					alert("Please Enter Password");
+					$('#password1').css({"border-color": "red"}).focus();
+					return false;
+					}
+				else if(password1.length<"8"){
+					alert("Password should minimum 8 digit or more");
+					$('#password1').css({"border-color": "red"}).focus();
+					return false;
+					}
+				else if (password1 != confirm_pass) { 
+	                alert ("\nPassword did not match: Please try again..."); 
+	                $('#Confirm_Password').css({"border-color": "red"}).focus();
+    	            return false; 
+        			} 
+        		else{ 
+        			var data = {
+        				'username':uname,
+                    	'password1':password1
+                    	}
+                    console.log(data);
+                    $.ajax({
+                    	type : 'POST',
+						url : "{{url_for('admininsert')}}",
+						contentType: 'application/json',
+					    dataType : 'json',
+					    data: JSON.stringify(data),
+					    success : function(data){
+					    	console.log(data);
+					        Swal.fire("",data.result,"");
+					        location.reload(true);
+					    }
+					});
+                }
+    		});
+    	});	
+ 	
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+	<style >
+		input{
+  			margin-top:10px;
+  			margin-right:10px; 
+  			margin-bottom: 10px;
+  		}
+  		#button1{
+  			margin-right:  150px;
+  		}
+  		table{
+  			text-align: center;
+  			margin-top:20px;
+  			margin-left:70px;
+  		}
+  		#button2
+  		{
+  			margin-left:  950px;
+  			margin-top:40px;
+  		}
+  		#is_monitor1,#is_monitor0{
+  			margin-left: 20px;
+  		}
+
+  	</style>
+  	
+
+</head>
+
+<div class="container">
+	<h1><center>CRUD Application</center></h1>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Information</h4>
+				<button type="button" class="close " data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<label>Username:</label>
+				<input type="text" class="form-control" id="username" pattern="[modaleditA-Za-z]+" >
+
+				<label>Password:</label>
+				<input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password1"  >
+
+				<label>Confirm_Password:</label>
+				<input type="password" class="form-control" pattern="myModal(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="confirm_pass" >
+
+				<button class="btn btn-primary" name='submit' id="submit1" >Submit</button>
+						
+			</div>
+		</div>
+	</div>
+</div>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Assignment -2</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+    	$(document).ready(function(){
+    		
+    		$('#drpdwn').click(function(){ 
+    			var d1=$('#drpdwn :selected').text();
+    			console.log(d1);
+    			var data={
+    				'drpid':d1
+    			}
+
+    			if (data.drpid=='Student') {
+    				$.ajax({
+    					type:'POST',
+    					url:"{{url_for('student')}}",
+    					contentType:'application/json',
+    					dataType:'json',
+    					data:JSON.stringify(data),
+    					success:function(data){
+    						window.location.href="{{url_for('studentinfo')}}"
+
+    					}
+
+    				});
+    			}
+
+                else if (data.drpid=='User') {
+                    $.ajax({
+                        type:'POST',
+                        url:"{{url_for('user')}}",
+                        contentType:'application/json',
+                        dataType:'json',
+                        data:JSON.stringify(data),
+                        success:function(data){
+                            window.location.href="{{url_for('userinfo')}}"
+
+                        }
+
+                    });
+                }
+    			
+    			else if (data.drpid=='Teacher') {
+    				$.ajax({
+    					type:'POST',
+    					url:"{{url_for('teacher')}}",
+    					contentType:'application/json',
+    					dataType:'json',
+    					data:JSON.stringify(data),
+    					success:function(data){
+    						window.location.href="{{url_for('teacherinfo')}}"
+
+    					}
+
+    				});
+    			}
+			});
+    	});
+
+    </script>
+	<style >
+	.dropdown1{
+		margin-right:  150px;
+		margin-left:  900px;
+  		margin-top:40px;
+	}
+		 		
+
+  	</style>
+  	
+</head>
+<body>
+	<div class="container">
+		<div class="dropdown1">
+			<select id="drpdwn" class="btn btn-primary btn-margin-left dropdown-toggle"  >
+				<option value="user" >User</option>
+				<option value="student" >Student</option>
+				<option value="teacher" >Teacher</option>
+			</select>
+		</div>
+		
+	</div>
+</body>
+</html>

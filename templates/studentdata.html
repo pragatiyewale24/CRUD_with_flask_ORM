@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+	<style >
+		input{
+  			margin-top:10px;
+  			margin-right:10px; 
+  			margin-bottom: 10px;
+  		}
+  		#button1{
+  			margin-right:  150px;
+  		}
+  		table{
+  			text-align: center;
+  			margin-top:20px;
+  			margin-left:70px;
+  		}
+  		.btn1
+  		{
+  			margin-left:  900px;
+  			margin-top:40px;
+  		}
+  		
+
+  	</style>
+  	
+  	
+</head>
+
+<body>
+	<script type="text/javascript">
+		function validateform(){ 
+			var class_name=$("#class_name").val();
+			var is_monitor=$('input:radio[name="is_monitor"]:checked').val();
+			var studying_subjects=$("#studying_subjects").val();
+			console.log(class_name);
+			console.log(is_monitor);
+			console.log(studying_subjects);
+			if (class_name==""){ 
+				alert("class_name can't be blank");
+				$('#class_name').css({"border-color": "red"}).focusout();
+				return false;  
+				}
+			else if(is_monitor==""){
+				alert("is_monitor can't be blank");  
+    			$('#is_monitor').css({"border-color": "red"}).focusout();
+    			return false;  
+    			}
+    		else if(studying_subjects==""){
+    			alert("studying_subject can't be blank");
+    			$('#studying_subjects').css({"border-color": "red"}).focus();
+				return false;
+				}
+			else{ 
+        		var data = {
+        				'class_name':class_name,
+                    	'is_monitor': is_monitor,
+                    	'studying_subjects':studying_subjects,
+                    	}
+                    console.log(data);
+                    $.ajax({
+                    	type : 'POST',
+						url : "{{url_for('studentinsert')}}",
+						contentType: 'application/json',
+					    dataType : 'json',
+					    data: JSON.stringify(data),
+					    success : function(data){
+					    	console.log(data);
+					        Swal.fire("",data.result,"");
+					        location.reload(true);
+					    }
+					});
+                }
+    	}
+
+   
+		function dynamicid(i){
+			var  id1=document.getElementById('id-'+ i).value;
+			console.log(id1);
+			validateFormupdate(id1);
+		}
+
+		function validateFormupdate(id1) { 
+					
+				var id2=$("#id-"+id1).val();
+				var class_name=$("#class_name-"+id1).val();
+				var is_monitor=$('input:radio[name="is_monitor"]:checked').val();
+				var studying_subjects=$("#studying_subjects-"+id1).val();
+				
+				console.log(id2);
+				console.log(class_name);
+				console.log(is_monitor);
+				console.log(studying_subjects);
+		
+				if (class_name==""){ 
+						alert("class_name can't be blank");
+						$('#class_name').css({"border-color": "red"}).focusout();
+						return false;  
+						}
+				else if(is_monitor==""){
+						alert("is_monitor can't be blank");  
+    					$('#is_monitor').css({"border-color": "red"}).focusout();
+    					return false;  
+    					}
+    			else if(studying_subjects==""){
+    					alert("studying_subject can't be blank");
+    					$('#studying_subjects').css({"border-color": "red"}).focus();
+						return false;
+						}
+				
+		    	else{ 
+		    			var data = {
+		    				'id':id2,
+                    		'class_name':class_name,
+                    		'is_monitor': is_monitor,
+                    		'studying_subjects':studying_subjects,
+                    		}
+                    
+                    	console.log(data);
+        			 	$.ajax({
+        			 		type : 'POST',
+						  	url : "{{url_for('studentupdate')}}",
+						   	contentType: 'application/json',
+					        dataType : 'json',
+					        data: JSON.stringify(data),
+					        success : function(data){ 
+					        	Swal.fire({
+					        		text: data.result,
+									});
+					         	location.reload(true);
+					         	}  
+						 });
+					}
+
+		}
+    
+
+	</script>
+	<div class="container">
+		<h1>User Validation</h1>
+		<div class="btn1">
+		 	<button id="button2" type="button" class="btn btn-primary btn-margin-left" data-toggle="modal" data-target="#myModal">Add Student
+		 	</button> 
+		 	<a href="{{url_for('adminlogout')}}">
+		 		<button class="btn btn-primary btn-margin-left" >Logout
+		 		</button>
+		 	</a>
+		</div>
+		
+		<div class="modal" id="myModal">
+			<h1><center>CRUD Application</center></h1>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Information</h4>
+						<button type="button" class="close " data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<label>Class Name:</label>
+						<input type="text" class="form-control" id="class_name" name="first_name" pattern="[A-Za-z]+" >
+
+						<label>Is_monitor:</label><br>
+						<input type="radio" id="is_monitor" name="is_monitor" value="1"> Yes
+  						<input type="radio" id="is_monitor" name="is_monitor" value="0"> No<br>
+
+						<label>studying_subject:</label>
+						<input type="text" class="form-control" id="studying_subjects" >
+
+						<button class="btn btn-primary" name='submit' id="submit1" onclick="return validateform()">Submit</button>
+					</div>						
+				</div>
+			</div>
+		</div>
+
+		<table class="table ">
+			<thead>
+				<th>Id</th>
+				<th>class_name</th>
+				<th>is_monitor</th>
+				<th>studying_subject</th>
+				<th>Action</th>
+			</thead>
+		    <tbody>
+		    	<tr>
+		    		{% for row in stud24%}
+					<td>{{row.student_id}}</td>
+					<td>{{row.class_name}}</td>
+					<td>{{row.is_monitor}}</td>
+					<td>{{row.studying_subjects }}</td>
+					<td>
+						<a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="
+						#modaledit{{row.student_id}}">Edit</a>
+						<a href="/studentdelete/{{row.student_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
+            		</td>
+
+				</tr>
+
+				<div id="modaledit{{row.student_id}}" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Update Information</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div class="modal-body">
+								<label>Class Name:</label>
+								<input type="hidden"  id="id-{{row.student_id}}" value="{{row.student_id}}">
+								<input type="text" class="form-control" id="class_name-{{row.student_id}}" value="{{row.class_name}}"  pattern="[A-Za-z]+" >
+
+								<label>Is_monitor:</label><br>
+								<input type="radio" id="is_monitor-{{row.student_id}}" name="is_monitor" value="{{row.is_monitor}}"> Yes
+  								<input type="radio" id="is_monitor-{{row.student_id}}" name="is_monitor" value="{{row.is_monitor}}"> No<br>
+
+								<label>studying_subject:</label>
+								<input type="text" class="form-control" id="studying_subjects-{{row.student_id}}" value="{{row.st}}" >
+
+								<button class="btn btn-primary" type="submit" name='submit'  onclick="return dynamicid('{{row.student_id}}' )">Update</button>
+							</div>
+						</div>
+					</div>
+				</div><br>
+
+               		{% endfor  %}
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

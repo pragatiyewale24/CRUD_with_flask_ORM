@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.container
+{
+	margin-left: 600px;
+	margin-right: 600px;
+}
+
+</style>
+</head>
+<body>
+
+<center><h1>Login Form</h1></center>
+
+  
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" id="username" autocomplete="off" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="password1" required>
+    <div class="msg">{{ ms }}</div>        
+    <button type="submit" id="login"  >Login</button>
+    <a href="{{url_for('register')}}">
+    <button type="submit" id="submit1"  >SignUp</button></a>
+   </div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#login').click(function(){ 
+			var uname=$("#username").val();					
+			var password1 =$("#password1").val();
+			if (uname==null || uname==""){ 
+				alert("Username should not be empty."); 
+				return false;  
+			}
+			if (password1==null || password1==""){ 
+				alert("Password should not be empty."); 
+				return false;  
+    		}
+    		
+			var data = {	
+				'username':uname,
+                'password1':password1,
+                }
+            console.log(data);
+        	$.ajax({
+        		type : 'POST',
+				url : "{{url_for('adminlogin')}}",
+				contentType: 'application/json',
+				dataType : 'json',
+				data: JSON.stringify(data),
+				success : function(data){ 
+					if(data.status_code==200){
+						console.log(data);
+					    window.location.href="{{url_for('userswitch')}}"	
+					}
+					else{
+						window.alert(data.result);
+					}
+					         	
+				}
+			});
+		});
+	});
+
+</script>
+</body>
+</html>
