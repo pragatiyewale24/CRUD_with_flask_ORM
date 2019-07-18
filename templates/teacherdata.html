@@ -163,8 +163,8 @@
 						<input type="text" class="form-control" id="department_name" name="first_name" pattern="[A-Za-z]+" >
 
 						<label>is_hod:</label><br>
-						<input type="radio" id="is_hod" name="is_hod" value="1"> Yes
-  						<input type="radio" id="is_hod" name="is_hod" value="0"> No<br>
+						<input type="radio" id="is_hod1" name="is_hod" value="1"> Yes
+  						<input type="radio" id="is_hod2" name="is_hod" value="0"> No<br>
 
 						<label>Teaching subject:</label>
 						<input type="text" class="form-control" id="teaching_subject" >
@@ -185,7 +185,7 @@
 			</thead>
 		    <tbody>
 		    	<tr>
-		    		{% for row in teacher24%}
+		    		{% for row in teacher%}
 					<td>{{row.teacher_id}}</td>
 					<td>{{row.department_name}}</td>
 					<td>{{row.is_hod}}</td>
@@ -209,11 +209,11 @@
 							<div class="modal-body">
 								<label>Department Name:</label>
 								<input type="hidden"  id="id-{{row.teacher_id}}" value="{{row.teacher_id}}">
-								<input type="text" class="form-control" id="department_name-{{row.teacher_id}}" value="{{row.department_name}}"name="first_name" pattern="[A-Za-z]+" >
+								<input type="text" class="form-control" id="department_name-{{row.teacher_id}}" value="{{row.department_name}}" pattern="[A-Za-z]+" >
 
 								<label>is_hod:</label><br>
-								<input type="radio" id="is_hod-{{row.teacher_id}}" name="is_hod" value="{{row.is_hod}}"> Yes
-  								<input type="radio" id="is_hod-{{row.teacher_id}}" name="is_hod" value="{{row.is_hod}}"> No<br>
+								<input type="radio" id="is_hod-{{row.teacher_id}}" name="is_hod" value="1" > Yes
+  								<input type="radio" id="is_hod-{{row.teacher_id}}" name="is_hod" value="0" > No<br>
 
 								<label>Teaching_subject:</label>
 								<input type="text" class="form-control" id="teaching_subject-{{row.teacher_id}}" value="{{row.teaching_subject}}" >

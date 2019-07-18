@@ -39,12 +39,23 @@
 <body>
 	<script type="text/javascript">
 		function validateform(){ 
+			
 			var class_name=$("#class_name").val();
 			var is_monitor=$('input:radio[name="is_monitor"]:checked').val();
 			var studying_subjects=$("#studying_subjects").val();
 			console.log(class_name);
 			console.log(is_monitor);
 			console.log(studying_subjects);
+
+			$("#is_monitor1").click(function(){
+        		$("#is_monitor1").prop("checked", true);
+        		});
+			$("#is_monitor0").click(function(){
+        		$("#is_monitor0").prop("checked", true);
+        		});
+
+
+
 			if (class_name==""){ 
 				alert("class_name can't be blank");
 				$('#class_name').css({"border-color": "red"}).focusout();
@@ -55,6 +66,7 @@
     			$('#is_monitor').css({"border-color": "red"}).focusout();
     			return false;  
     			}
+    		    		
     		else if(studying_subjects==""){
     			alert("studying_subject can't be blank");
     			$('#studying_subjects').css({"border-color": "red"}).focus();
@@ -100,7 +112,7 @@
 				console.log(class_name);
 				console.log(is_monitor);
 				console.log(studying_subjects);
-		
+						
 				if (class_name==""){ 
 						alert("class_name can't be blank");
 						$('#class_name').css({"border-color": "red"}).focusout();
@@ -169,8 +181,8 @@
 						<input type="text" class="form-control" id="class_name" name="first_name" pattern="[A-Za-z]+" >
 
 						<label>Is_monitor:</label><br>
-						<input type="radio" id="is_monitor" name="is_monitor" value="1"> Yes
-  						<input type="radio" id="is_monitor" name="is_monitor" value="0"> No<br>
+						<input type="radio" id="is_monitor1" name="is_monitor" value="1"> Yes
+  						<input type="radio" id="is_monitor0" name="is_monitor" value="0"> No<br>
 
 						<label>studying_subject:</label>
 						<input type="text" class="form-control" id="studying_subjects" >
@@ -191,7 +203,7 @@
 			</thead>
 		    <tbody>
 		    	<tr>
-		    		{% for row in stud24%}
+		    		{% for row in student%}
 					<td>{{row.student_id}}</td>
 					<td>{{row.class_name}}</td>
 					<td>{{row.is_monitor}}</td>
@@ -216,13 +228,13 @@
 								<label>Class Name:</label>
 								<input type="hidden"  id="id-{{row.student_id}}" value="{{row.student_id}}">
 								<input type="text" class="form-control" id="class_name-{{row.student_id}}" value="{{row.class_name}}"  pattern="[A-Za-z]+" >
-
+											
 								<label>Is_monitor:</label><br>
-								<input type="radio" id="is_monitor-{{row.student_id}}" name="is_monitor" value="{{row.is_monitor}}"> Yes
-  								<input type="radio" id="is_monitor-{{row.student_id}}" name="is_monitor" value="{{row.is_monitor}}"> No<br>
+								<input type="radio" id="is_monitor1-{{row.student_id}}" name="is_monitor" value="1"  > Yes
+								<input type="radio" id="is_monitor0-{{row.student_id}}" name="is_monitor" value="0" > No<br>
 
 								<label>studying_subject:</label>
-								<input type="text" class="form-control" id="studying_subjects-{{row.student_id}}" value="{{row.st}}" >
+								<input type="text" class="form-control" id="studying_subjects-{{row.student_id}}" value="{{row.studying_subjects}}" >
 
 								<button class="btn btn-primary" type="submit" name='submit'  onclick="return dynamicid('{{row.student_id}}' )">Update</button>
 							</div>

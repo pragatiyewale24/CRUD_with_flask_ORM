@@ -18,49 +18,17 @@
     			}
 
     			if (data.drpid=='Student') {
-    				$.ajax({
-    					type:'POST',
-    					url:"{{url_for('student')}}",
-    					contentType:'application/json',
-    					dataType:'json',
-    					data:JSON.stringify(data),
-    					success:function(data){
-    						window.location.href="{{url_for('studentinfo')}}"
-
-    					}
-
-    				});
+    				window.location.href="studentinfo"
     			}
 
                 else if (data.drpid=='User') {
-                    $.ajax({
-                        type:'POST',
-                        url:"{{url_for('user')}}",
-                        contentType:'application/json',
-                        dataType:'json',
-                        data:JSON.stringify(data),
-                        success:function(data){
-                            window.location.href="{{url_for('userinfo')}}"
-
-                        }
-
-                    });
+                    window.location.href="userinfo"
                 }
     			
     			else if (data.drpid=='Teacher') {
-    				$.ajax({
-    					type:'POST',
-    					url:"{{url_for('teacher')}}",
-    					contentType:'application/json',
-    					dataType:'json',
-    					data:JSON.stringify(data),
-    					success:function(data){
-    						window.location.href="{{url_for('teacherinfo')}}"
+    				window.location.href="teacherinfo"
 
-    					}
-
-    				});
-    			}
+      			}
 			});
     	});
 
